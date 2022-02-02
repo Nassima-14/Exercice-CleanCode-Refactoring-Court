@@ -6,9 +6,9 @@ import java.util.stream.IntStream;
 
 //// Company class
 public class CompanyPayroll {
-final private List<Employee> eList;
-private List<Paycheck>       p;
-private List<Boolean> h; // who takes holidays
+    final private List<Employee> eList;
+    private List<Paycheck>       p;
+    private List<Boolean> h; // who takes holidays
     // end private attributes
 
     //  constructor
