@@ -16,17 +16,17 @@ public class Main {
         Employee e4 = new HourlyEmployee("Ernest", "intern", 1, 5, 50 * 4);
         Employee e5 = new HourlyEmployee("Fred", "intern", 1, 5, 50 * 4);
 
-        companyPayroll.addEmp(e1);
-        companyPayroll.addEmp(e2);
-        companyPayroll.addEmp(e3);
-        companyPayroll.addEmp(e4);
-        companyPayroll.addEmp(e5);
+        companyPayroll.addEmployee(e1);
+        companyPayroll.addEmployee(e2);
+        companyPayroll.addEmployee(e3);
+        companyPayroll.addEmployee(e4);
+        companyPayroll.addEmployee(e5);
 
         System.out.println("----- Listing employees -----");
-        companyPayroll.find_Vice_Presidents().forEach(System.out::println);
-        companyPayroll.findMgs().forEach(System.out::println);
-        companyPayroll.findSWE().forEach(System.out::println);
-        companyPayroll.find_interns().forEach(System.out::println);
+        companyPayroll.findVicePresidents().forEach(System.out::println);
+        companyPayroll.findManagers().forEach(System.out::println);
+        companyPayroll.findSoftwareEngineers().forEach(System.out::println);
+        companyPayroll.findInterns().forEach(System.out::println);
 
         System.out.println("----- Giving raises -----");
         companyPayroll.salaryRaise(e1, 10);
@@ -38,7 +38,7 @@ public class Main {
         System.out.println("\n----- Pay statistics -----");
         float t = companyPayroll.getTotalmoney();
         System.out.println("Total money spent: ");
-        float avg = companyPayroll.avgPayCehck_pending();
+        float avg = companyPayroll.averagePayCheckPending();
         System.out.println("Average paycheck: " + avg);
 
         System.out.println("\n----- Pay -----");
