@@ -48,7 +48,7 @@ class CompanyPayrollTest {
 
         company.createPending();
 
-        Paycheck paycheck = company.getPendings().get(0);
+        Paycheck paycheck = company.getPendingPayChecks().get(0);
         assertThat(paycheck.getTo()).isEqualTo(HOURLY_NAME);
         assertThat(paycheck.getAmount()).isEqualTo(HOURLY_RATE * HOURLY_AMOUNT);
     }
@@ -59,7 +59,7 @@ class CompanyPayrollTest {
 
         company.createPending();
 
-        Paycheck paycheck = company.getPendings().get(0);
+        Paycheck paycheck = company.getPendingPayChecks().get(0);
         assertThat(paycheck.getTo()).isEqualTo(SALARIED_NAME);
         assertThat(paycheck.getAmount()).isEqualTo(BIWEEKLY_AMOUNT);
     }
@@ -75,14 +75,14 @@ class CompanyPayrollTest {
 
         company.processPending();
 
-        assertThat(company.getPendings().size()).isEqualTo(0);
+        assertThat(company.getPendingPayChecks().size()).isEqualTo(0);
     }
 
     @Test
     void findSWE_shouldReturnSoftwareEngineers() {
         company.addEmployee(eng);
 
-        List<Employee> es = company.findSoftwareEngineers();
+        List<Employee> es = company.findEmployeesDependingOnRole("engineer");
         assertThat(es).containsExactly(eng);
     }
 
@@ -90,7 +90,7 @@ class CompanyPayrollTest {
     void findMgs_shouldReturnManagers() {
         company.addEmployee(manager);
 
-        List<Employee> es = company.findManagers();
+        List<Employee> es = company.findEmployeesDependingOnRole("manager");
         assertThat(es).containsExactly(manager);
     }
 
@@ -98,7 +98,7 @@ class CompanyPayrollTest {
     void find_Vice_Presidents_shouldReturnVicePresidents() {
         company.addEmployee(vp);
 
-        List<Employee> es = company.findVicePresidents();
+        List<Employee> es = company.findEmployeesDependingOnRole("vp");
         assertThat(es).containsExactly(vp);
     }
 
@@ -107,7 +107,7 @@ class CompanyPayrollTest {
         company.addEmployee(intern1);
         company.addEmployee(intern2);
 
-        List<Employee> es = company.findInterns();
+        List<Employee> es = company.findEmployeesDependingOnRole("intern");
         assertThat(es).containsExactly(intern1, intern2);
     }
 
@@ -121,7 +121,7 @@ class CompanyPayrollTest {
 
         company.createPending();
 
-        assertThat(company.getPendings().size()).isEqualTo(5);
+        assertThat(company.getPendingPayChecks().size()).isEqualTo(5);
     }
 
     @Test
@@ -134,7 +134,7 @@ class CompanyPayrollTest {
 
         company.createPending();
 
-        assertThat(company.getPendings().size()).isEqualTo(5);
+        assertThat(company.getPendingPayChecks().size()).isEqualTo(5);
     }
 
     @Test
@@ -144,7 +144,7 @@ class CompanyPayrollTest {
         company.salaryRaise(hourlyEmployee, RAISE);
 
         company.createPending();
-        Paycheck paycheck = company.getPendings().get(0);
+        Paycheck paycheck = company.getPendingPayChecks().get(0);
         assertThat(paycheck.getAmount()).isEqualTo((HOURLY_RATE + RAISE) * HOURLY_AMOUNT);
     }
 
@@ -155,7 +155,7 @@ class CompanyPayrollTest {
         company.salaryRaise(salariedEmployee, RAISE);
 
         company.createPending();
-        Paycheck paycheck = company.getPendings().get(0);
+        Paycheck paycheck = company.getPendingPayChecks().get(0);
         assertThat(paycheck.getAmount()).isEqualTo(BIWEEKLY_AMOUNT + RAISE);
     }
 
@@ -188,7 +188,7 @@ class CompanyPayrollTest {
         company.addEmployee(anotherSalariedEmployee);
         company.createPending();
 
-        float t = company.getTotalmoney();
+        float t = company.getTotalPayChecks();
 
         assertThat(t).isEqualTo(BIWEEKLY_AMOUNT + ANOTHER_MONTHLY_AMOUNT);
     }

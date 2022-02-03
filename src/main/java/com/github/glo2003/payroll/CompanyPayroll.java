@@ -4,22 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-//// Company class
+
 public class CompanyPayroll {
     final private List<Employee> employees;
     private List<Paycheck>       payChecks;
-    private List<Boolean> isTakingHolidays; // who takes holidays
-    // end private attributes
+    private List<Boolean> isTakingHolidays;
 
-    //  constructor
     public CompanyPayroll() {
         this.employees = new ArrayList<>();
         this.payChecks = new ArrayList<>();
         isTakingHolidays = new ArrayList<>();
     }
-
-
-
 
     // process pending
     public void processPending() {
@@ -30,72 +25,17 @@ public class CompanyPayroll {
     }
 
 
-    /***
-     * add employee
-     * @param employee: employee to add
-     */
     public void addEmployee(Employee employee) {
         employees.add(employee);
         this.isTakingHolidays.add(false);
-
     }
 
-    /***
-     * find
-     * @return found
-     */
-    public List<Employee> findSoftwareEngineers() { // software engineer
-        List<Employee> softwareEngineerEmployees = new ArrayList<>();
-        for (Employee employee: employees) {
-            if (employee.getRole().equals("engineer")) softwareEngineerEmployees.add(employee);
-        }
-        return softwareEngineerEmployees;
+    public List<Employee> findEmployeesDependingOnRole(String roleOfEmployee) {
+        List<Employee> foundEmployees = new ArrayList<>();
+        for (Employee employee: employees) if (employee.getRole().equals(roleOfEmployee)) foundEmployees.add(employee);
+        return foundEmployees;
     }
 
-    /***
-     * todo
-     * @return
-     */
-    public List<Employee> findManagers() { // find managers
-
-        List<Employee> managerEmployees = new ArrayList<>();
-        for (Employee employee: employees) {
-            if (employee.getRole().equals("manager")) managerEmployees.add(employee);
-        }
-        return managerEmployees;
-    }
-
-    /*
-    public void test1() {
-        this.findManagers();
-        this.pay();
-        this.fire(e);
-    }
-    */
-
-    public List<Employee> findVicePresidents() {
-        List<Employee> vicePresidentEmployees = new ArrayList<>();
-        for (Employee employee: employees) {
-            if (employee.getRole().equals("vp")) vicePresidentEmployees.add(employee);
-        }
-        return vicePresidentEmployees;
-    }
-
-    // insert documentation here
-    public List<Employee> findInterns() {  // snake case is better
-        List<Employee> internEmployees = new ArrayList<>();
-        for (Employee employee: employees) {
-            if (employee.getRole().equals("intern")) internEmployees.add(employee);
-        }
-        return internEmployees;
-    }
-
-
-
-
-
-
-    // create pending
     public void createPending() {
         for (Employee employee: employees) {               // for loop
             if (employee instanceof HourlyEmployee) {                 // is hourly
@@ -135,26 +75,15 @@ public class CompanyPayroll {
         }
     }
 
-
-
-
-
-    ///Statistics
     public float averagePayCheckPending() {
-        float averagePayCheck;
         if (this.payChecks.size() == 0) {
             return -1f;
         }
-        float sumPayChecks = 0.f;
-        for (Paycheck payCheck : payChecks) {
-            sumPayChecks += payCheck.getAmount();
-        }
-        averagePayCheck = sumPayChecks / this.payChecks.size();
-        return averagePayCheck;
+        return this.getTotalPayChecks() / this.payChecks.size();
     }
 
 
-    public float getTotalmoney() {
+    public float getTotalPayChecks() {
         float sumPayChecks = 0.f;
         for (Paycheck payCheck : payChecks) {
             sumPayChecks += payCheck. getAmount();
@@ -162,10 +91,7 @@ public class CompanyPayroll {
         return sumPayChecks;
     }
 
-
-
-
-    public List<Paycheck> getPendings() {
+    public List<Paycheck> getPendingPayChecks() {
         return this.payChecks;
     }
 

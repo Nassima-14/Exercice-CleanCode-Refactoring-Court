@@ -23,10 +23,10 @@ public class Main {
         companyPayroll.addEmployee(e5);
 
         System.out.println("----- Listing employees -----");
-        companyPayroll.findVicePresidents().forEach(System.out::println);
-        companyPayroll.findManagers().forEach(System.out::println);
-        companyPayroll.findSoftwareEngineers().forEach(System.out::println);
-        companyPayroll.findInterns().forEach(System.out::println);
+        companyPayroll.findEmployeesDependingOnRole("vp").forEach(System.out::println);
+        companyPayroll.findEmployeesDependingOnRole("manager").forEach(System.out::println);
+        companyPayroll.findEmployeesDependingOnRole("engineer").forEach(System.out::println);
+        companyPayroll.findEmployeesDependingOnRole("intern").forEach(System.out::println);
 
         System.out.println("----- Giving raises -----");
         companyPayroll.salaryRaise(e1, 10);
@@ -36,7 +36,7 @@ public class Main {
         companyPayroll.createPending();
 
         System.out.println("\n----- Pay statistics -----");
-        float t = companyPayroll.getTotalmoney();
+        float t = companyPayroll.getTotalPayChecks();
         System.out.println("Total money spent: ");
         float avg = companyPayroll.averagePayCheckPending();
         System.out.println("Average paycheck: " + avg);
