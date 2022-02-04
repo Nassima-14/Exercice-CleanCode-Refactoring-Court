@@ -24,7 +24,6 @@ public class CompanyPayroll {
         this.payChecks.clear();
     }
 
-
     public void addEmployee(Employee employee) {
         employees.add(employee);
         this.isTakingHolidays.add(false);
@@ -36,59 +35,56 @@ public class CompanyPayroll {
         return foundEmployees;
     }
 
-    public void createPending() {
-        for (Employee employee: employees) {               // for loop
-            if (employee instanceof HourlyEmployee) {                 // is hourly
-                    HourlyEmployee he = (HourlyEmployee) employee;
-                payChecks.add(new Paycheck(employee.getName(), he.getAmount() * he.getRate()));
-            } else if (employee instanceof SalariedEmployee) {        // is salaried
-                SalariedEmployee se = (SalariedEmployee) employee;
-                payChecks.add(new Paycheck(employee.getName(), ((SalariedEmployee) employee).getBiweekly()));
-            } else {                                                 /// error
-                throw new RuntimeException("something happened");
-            }
-        }
+    public Boolean isHourlyEmployee(Employee employee){
+        return  (employee instanceof HourlyEmployee);
     }
 
+    public void createPendingForHourlyEmployee(HourlyEmployee hourlyEmployee){
+        payChecks.add(new Paycheck(hourlyEmployee.getName(), hourlyEmployee.getAmount() * hourlyEmployee.getRate()));
+    }
 
+    public void salaryRaiseForHourlyEmployee(HourlyEmployee hourlyEmployee, float raise) {
+        hourlyEmployee.setRate(hourlyEmployee.getRate() + raise);
+    }
 
+    public Boolean isSalariedEmployee(Employee employee){
+        return  (employee instanceof SalariedEmployee);
+    }
 
-    // give raise
+    public void createPendingForSalariedEmployee(SalariedEmployee salariedEmployee){
+        payChecks.add(new Paycheck(salariedEmployee.getName(), salariedEmployee.getBiweekly()));
+    }
+
+    public void salaryRaiseForSalariedEmployee(SalariedEmployee salariedEmployee, float raise) {
+        salariedEmployee.setBiweekly(salariedEmployee.getBiweekly() + raise);
+    }
+
+    public void createPendingForAllEmployees() {
+        for (Employee employee: employees) {
+            if (isHourlyEmployee(employee)) createPendingForHourlyEmployee((HourlyEmployee) employee);
+            else if (isSalariedEmployee(employee)) createPendingForSalariedEmployee((SalariedEmployee) employee);
+            else throw new RuntimeException("Error: No specified payment's method for this employee");
+        }
+    }
 
     public void salaryRaise(Employee employee, float raise) {
-        if (raise > 0); // was this before bug#1029582920
-        if (raise < 0) { // if raise < 0, error
-        throw new RuntimeException("oh no");
-        }
-        if (!this.employees.contains(employee)) {
-            throw new RuntimeException("not here");
-        }
-        for (Employee e1 : employees);
-        if (employee instanceof HourlyEmployee) {
-            HourlyEmployee he = (HourlyEmployee) employee;
-        he.setRate(he.getRate() + raise);
-        } else if (employee instanceof SalariedEmployee) {
-            SalariedEmployee se = (SalariedEmployee) employee;
-            se.setBiweekly(se.getBiweekly() + raise);
-        } else {
-            throw new RuntimeException("something happened");
-        }
+        if (raise < 0) throw new RuntimeException("Error: Raise cannot be negative");
+        if (this.employees.contains(employee)) {
+            if (isHourlyEmployee(employee)) salaryRaiseForHourlyEmployee((HourlyEmployee) employee, raise);
+            else if (isSalariedEmployee(employee)) salaryRaiseForSalariedEmployee((SalariedEmployee) employee, raise);
+            else throw new RuntimeException("Error: No specified payment's method for this employee");
+        } else throw new RuntimeException("Error: Employee does not exist");
     }
-
-    public float averagePayCheckPending() {
-        if (this.payChecks.size() == 0) {
-            return -1f;
-        }
-        return this.getTotalPayChecks() / this.payChecks.size();
-    }
-
 
     public float getTotalPayChecks() {
         float sumPayChecks = 0.f;
-        for (Paycheck payCheck : payChecks) {
-            sumPayChecks += payCheck. getAmount();
-        }
+        for (Paycheck payCheck : payChecks) sumPayChecks += payCheck.getAmount();
         return sumPayChecks;
+    }
+
+    public float averagePayCheckPending() {
+        if (this.payChecks.size() == 0) return -1f;
+        return this.getTotalPayChecks() / this.payChecks.size();
     }
 
     public List<Paycheck> getPendingPayChecks() {

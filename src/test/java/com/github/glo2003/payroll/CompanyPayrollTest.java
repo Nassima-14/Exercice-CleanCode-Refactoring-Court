@@ -46,7 +46,7 @@ class CompanyPayrollTest {
     void createPendingsCreatesCorrectHourlyPaycheck() {
         company.addEmployee(hourlyEmployee);
 
-        company.createPending();
+        company.createPendingForAllEmployees();
 
         Paycheck paycheck = company.getPendingPayChecks().get(0);
         assertThat(paycheck.getTo()).isEqualTo(HOURLY_NAME);
@@ -57,7 +57,7 @@ class CompanyPayrollTest {
     void createPendingsCreatesCorrectSalariedPaycheck() {
         company.addEmployee(salariedEmployee);
 
-        company.createPending();
+        company.createPendingForAllEmployees();
 
         Paycheck paycheck = company.getPendingPayChecks().get(0);
         assertThat(paycheck.getTo()).isEqualTo(SALARIED_NAME);
@@ -71,7 +71,7 @@ class CompanyPayrollTest {
         company.addEmployee(manager);
         company.addEmployee(intern1);
         company.addEmployee(intern2);
-        company.createPending();
+        company.createPendingForAllEmployees();
 
         company.processPending();
 
@@ -119,7 +119,7 @@ class CompanyPayrollTest {
         company.addEmployee(intern1);
         company.addEmployee(intern2);
 
-        company.createPending();
+        company.createPendingForAllEmployees();
 
         assertThat(company.getPendingPayChecks().size()).isEqualTo(5);
     }
@@ -132,7 +132,7 @@ class CompanyPayrollTest {
         company.addEmployee(intern1);
         company.addEmployee(intern2);
 
-        company.createPending();
+        company.createPendingForAllEmployees();
 
         assertThat(company.getPendingPayChecks().size()).isEqualTo(5);
     }
@@ -143,7 +143,7 @@ class CompanyPayrollTest {
 
         company.salaryRaise(hourlyEmployee, RAISE);
 
-        company.createPending();
+        company.createPendingForAllEmployees();
         Paycheck paycheck = company.getPendingPayChecks().get(0);
         assertThat(paycheck.getAmount()).isEqualTo((HOURLY_RATE + RAISE) * HOURLY_AMOUNT);
     }
@@ -154,7 +154,7 @@ class CompanyPayrollTest {
 
         company.salaryRaise(salariedEmployee, RAISE);
 
-        company.createPending();
+        company.createPendingForAllEmployees();
         Paycheck paycheck = company.getPendingPayChecks().get(0);
         assertThat(paycheck.getAmount()).isEqualTo(BIWEEKLY_AMOUNT + RAISE);
     }
@@ -175,7 +175,7 @@ class CompanyPayrollTest {
     void avgPayCehck_pending() {
         company.addEmployee(salariedEmployee);
         company.addEmployee(anotherSalariedEmployee);
-        company.createPending();
+        company.createPendingForAllEmployees();
 
         float avg = company.averagePayCheckPending();
 
@@ -186,7 +186,7 @@ class CompanyPayrollTest {
     void getTotalmoney() {
         company.addEmployee(salariedEmployee);
         company.addEmployee(anotherSalariedEmployee);
-        company.createPending();
+        company.createPendingForAllEmployees();
 
         float t = company.getTotalPayChecks();
 

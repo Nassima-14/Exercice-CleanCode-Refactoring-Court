@@ -33,7 +33,7 @@ public class Main {
         companyPayroll.salaryRaise(e2, 100);
 
         System.out.println("\n----- Create paychecks -----");
-        companyPayroll.createPending();
+        companyPayroll.createPendingForAllEmployees();
 
         System.out.println("\n----- Pay statistics -----");
         float t = companyPayroll.getTotalPayChecks();
