@@ -73,7 +73,7 @@ class CompanyPayrollTest {
         company.addEmployee(intern2);
         company.createPendingForAllEmployees();
 
-        company.processPending();
+        company.processPendingPayChecks();
 
         assertThat(company.getPendingPayChecks().size()).isEqualTo(0);
     }

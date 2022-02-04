@@ -16,11 +16,13 @@ public class CompanyPayroll {
         isTakingHolidays = new ArrayList<>();
     }
 
-    // process pending
-    public void processPending() {
+    public void setTakingHolidaysToFalse(){
         IntStream.range(0, this.payChecks.size()).forEach((i) -> this.isTakingHolidays.set(i, false));
-        for (Paycheck payCheck : payChecks)
-            System.out.println("Sending " + payCheck.getAmount() + "$ to " + payCheck.getTo());
+    }
+
+    public void processPendingPayChecks() {
+        setTakingHolidaysToFalse();
+        payChecks.stream().map(payCheck -> "Sending " + payCheck.getAmount() + "$ to " + payCheck.getTo()).forEach(System.out::println);
         this.payChecks.clear();
     }
 

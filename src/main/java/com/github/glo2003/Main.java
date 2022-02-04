@@ -42,6 +42,6 @@ public class Main {
         System.out.println("Average paycheck: " + avg);
 
         System.out.println("\n----- Pay -----");
-        companyPayroll.processPending();
+        companyPayroll.processPendingPayChecks();
     }
 }
