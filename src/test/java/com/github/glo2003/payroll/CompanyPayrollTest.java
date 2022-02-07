@@ -82,7 +82,7 @@ class CompanyPayrollTest {
     void findSWE_shouldReturnSoftwareEngineers() {
         company.addEmployee(eng);
 
-        List<Employee> es = company.findEmployeesDependingOnRole("engineer");
+        List<Employee> es = company.findEmployeesDependingOnRole(Role.ENGINEER);
         assertThat(es).containsExactly(eng);
     }
 
@@ -90,7 +90,7 @@ class CompanyPayrollTest {
     void findMgs_shouldReturnManagers() {
         company.addEmployee(manager);
 
-        List<Employee> es = company.findEmployeesDependingOnRole("manager");
+        List<Employee> es = company.findEmployeesDependingOnRole(Role.MANAGER);
         assertThat(es).containsExactly(manager);
     }
 
@@ -98,7 +98,7 @@ class CompanyPayrollTest {
     void find_Vice_Presidents_shouldReturnVicePresidents() {
         company.addEmployee(vp);
 
-        List<Employee> es = company.findEmployeesDependingOnRole("vp");
+        List<Employee> es = company.findEmployeesDependingOnRole(Role.VICE_PRESIDENT);
         assertThat(es).containsExactly(vp);
     }
 
@@ -107,7 +107,7 @@ class CompanyPayrollTest {
         company.addEmployee(intern1);
         company.addEmployee(intern2);
 
-        List<Employee> es = company.findEmployeesDependingOnRole("intern");
+        List<Employee> es = company.findEmployeesDependingOnRole(Role.INTERN);
         assertThat(es).containsExactly(intern1, intern2);
     }
 
@@ -172,7 +172,7 @@ class CompanyPayrollTest {
     }
 
     @Test
-    void avgPayCehck_pending() {
+    void averagePayCheckPending() {
         company.addEmployee(salariedEmployee);
         company.addEmployee(anotherSalariedEmployee);
         company.createPendingForAllEmployees();
@@ -183,7 +183,7 @@ class CompanyPayrollTest {
     }
 
     @Test
-    void getTotalmoney() {
+    void getTotalPayChecks() {
         company.addEmployee(salariedEmployee);
         company.addEmployee(anotherSalariedEmployee);
         company.createPendingForAllEmployees();

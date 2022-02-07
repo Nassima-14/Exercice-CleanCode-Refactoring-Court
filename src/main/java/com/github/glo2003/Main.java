@@ -1,9 +1,6 @@
 package com.github.glo2003;
 
-import com.github.glo2003.payroll.CompanyPayroll;
-import com.github.glo2003.payroll.Employee;
-import com.github.glo2003.payroll.HourlyEmployee;
-import com.github.glo2003.payroll.SalariedEmployee;
+import com.github.glo2003.payroll.*;
 
 public class Main {
 
@@ -23,10 +20,10 @@ public class Main {
         companyPayroll.addEmployee(e5);
 
         System.out.println("----- Listing employees -----");
-        companyPayroll.findEmployeesDependingOnRole("vp").forEach(System.out::println);
-        companyPayroll.findEmployeesDependingOnRole("manager").forEach(System.out::println);
-        companyPayroll.findEmployeesDependingOnRole("engineer").forEach(System.out::println);
-        companyPayroll.findEmployeesDependingOnRole("intern").forEach(System.out::println);
+        companyPayroll.findEmployeesDependingOnRole(Role.VICE_PRESIDENT).forEach(System.out::println);
+        companyPayroll.findEmployeesDependingOnRole(Role.MANAGER).forEach(System.out::println);
+        companyPayroll.findEmployeesDependingOnRole(Role.ENGINEER).forEach(System.out::println);
+        companyPayroll.findEmployeesDependingOnRole(Role.INTERN).forEach(System.out::println);
 
         System.out.println("----- Giving raises -----");
         companyPayroll.salaryRaise(e1, 10);

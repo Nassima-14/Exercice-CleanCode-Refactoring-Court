@@ -31,7 +31,7 @@ public class CompanyPayroll {
         this.isTakingHolidays.add(false);
     }
 
-    public List<Employee> findEmployeesDependingOnRole(String roleOfEmployee) {
+    public List<Employee> findEmployeesDependingOnRole(Role roleOfEmployee) {
         List<Employee> foundEmployees = new ArrayList<>();
         for (Employee employee: employees) if (employee.getRole().equals(roleOfEmployee)) foundEmployees.add(employee);
         return foundEmployees;
